@@ -54,13 +54,13 @@
             slidesToShow: 3,
             autoplay: true,
             autoplaySpeed: 4000,
-            dots: false,
-            arrows: true,
+            dots: true,
+            arrows: false,
             centerMode: true,
-            variableWidth: true,
             infinite: true,
             focusOnSelect: true,
             cssEase: 'linear',
+            centerPadding: '40px',
             touchMove: true,
             responsive: [{
                 breakpoint: 900,
@@ -82,6 +82,21 @@
             return false;
         });
 
+        //fixed menu
+        var el = $('.header-fixed'),
+            sH = el.outerHeight(),
+            sY = el.offset().top+sH;
+
+        $(window).on('scroll', function() {
+            if($(this).scrollTop() >= sY && $(this).scrollTop() <= sY+sH) {
+                el.css('transform', 'translateY(-'+(this.scrollY-sY)/sH*100+'%)');
+            } else if($(this).scrollTop() < sY) {
+                el.css('transform', 'translateY(-100%)');
+            } else if($(this).scrollTop() < $(this).scrollTop() <= sY+sH) {
+                el.css('transform', 'translateY(0)');
+            }
+        });
+
         //Mask phone
         jQuery(function ($) {
             $(".phone").mask("+7 (999) 999-99-99");
@@ -97,6 +112,9 @@
         let yearY = date.getFullYear();
 
         document.getElementById('year-y').innerHTML = yearY;
+        document.getElementById('projects-counter__day').innerHTML = dayNumber;
+        document.getElementById('projects-counter__month').innerHTML = month;
+        document.getElementById('projects-counter__year').innerHTML = yearY;
 
 
         // Получаем элементы на странице
@@ -133,6 +151,20 @@
         // Запускаем функцию каждую секунду
         setInterval(updateCounter, 1000);
 
+        const d = document.getElementById('projects-counter__num');
+        let counter = 5;
 
+        setInterval(() => {
+            counter += 5;
+            d.textContent = counter;
+        }, 604800000);
+
+        const b = document.getElementById('projects-counter__num-1');
+        let counterB = 2000;
+
+        setInterval(() => {
+            counterB += 5;
+            b.textContent = counterB;
+        }, 604800000);
     });
 })(jQuery);
