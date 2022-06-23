@@ -38,6 +38,7 @@ main {
     width: 35px;
     height: 30px;
     margin-left: 20px;
+    align-self: center;
 
     @include md-block() {
         display: block;
@@ -78,7 +79,7 @@ main {
     width: 100%;
     right: -100%;
     height: 100vh;
-    background: $color-red;
+    background-color: $bg;
     box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.65);
     position: absolute;
     z-index: 9998;
@@ -184,9 +185,16 @@ main {
     height: 100%;
     left: 0;
     top: 0;
-    background: rgb(0, 0, 0);
-    background: rgba(0, 0, 0, 0.8);
     overflow: auto;
+
+    &-bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: rgba(0, 0, 0, 0.8);
+    }
 
     &-box {
         position: relative;
@@ -199,7 +207,6 @@ main {
     }
 
     &-body {
-        background: #fff;
         padding: 20px;
     }
 
@@ -208,6 +215,10 @@ main {
         font-size: 24px;
         color: $color-red;
         margin-bottom: 24px;
+    }
+
+    .btn {
+        width: 100%;
     }
 }
 
@@ -259,6 +270,7 @@ main {
     cursor: pointer;
     border: 1px solid $color-red;
     background-color: transparent;
+    z-index: 2;
 
     &::after {
         content: '';
@@ -345,9 +357,6 @@ main {
         }
     }
 
-    @include md-block() {
-    }
-
     &__items {
         display: flex;
         justify-content: space-between;
@@ -356,6 +365,7 @@ main {
 
         @include md-block() {
             flex-wrap: wrap;
+            justify-content: center;
         }
     }
 
@@ -385,6 +395,15 @@ main {
                 margin-right: 10px;
             }
         }
+
+        @include md-block() {
+            margin-top: 20px;
+            text-align: center;
+
+            .fa-block {
+                justify-content: center;
+            }
+        }
     }
 }
 
@@ -398,6 +417,12 @@ main {
     box-shadow: $shadow;
     padding: 0 20px;
     box-sizing: border-box;
+    transition: all .3s ease;
+    transform: translateY(-100%);
+
+    &.out {
+        transform: translateY(0);
+    }
 
     &__items {
         display: flex;
@@ -419,6 +444,10 @@ main {
     }
 
     &__menu {
+        @include md-block() {
+            display: none;
+        }
+
         ul {
             height: 100%;
             display: flex;
@@ -477,7 +506,11 @@ main {
     padding: 10px;
     box-sizing: border-box;
     background-color: $bg;
-    z-index: 3;
+    z-index: 2;
+
+    @include sm-block() {
+        display: none;
+    }
 
     strong {
         font-weight: 600;
@@ -506,15 +539,27 @@ main {
 
     h1 {
         font-size: 34px;
+
+        @include sm-block() {
+            font-size: 24px;
+        }
     }
 
     h2 {
         font-size: 24px;
         margin: 20px 0;
+
+        @include sm-block() {
+            font-size: 20px;
+            margin: 10px 0;
+        }
     }
 
     h3 {
         font-size: 24px;
+        @include sm-block() {
+            font-size: 18px;
+        }
     }
 
     .btn {
@@ -534,6 +579,19 @@ main {
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
+
+            @include xsm-block() {
+                flex-direction: column;
+                text-align: center;
+
+                &--icon {
+                    margin-bottom: 20px;
+                }
+
+                &--text {
+                    width: 100%;
+                }
+            }
 
             &--icon {
                 display: flex;
@@ -588,6 +646,10 @@ main {
                 border: 1px solid $color-red;
             }
 
+            &:hover {
+                color: $color-red;
+            }
+
             img {
                 width: 50px;
                 margin-right: 20px;
@@ -602,19 +664,34 @@ main {
         border-left: 1px solid $color-red;
         box-sizing: border-box;
         padding-left: 30px;
+
+        @include sm-block() {
+            padding-left: 0;
+            border-left: none;
+        }
     }
 
     .price-table {
         table {
             width: 100%;
+            margin-bottom: 20px;
 
             img {
                 width: 200px;
+
+                @include sm-block() {
+                    width: 150px;
+                }
             }
+
 
             th, td {
                 text-align: center;
                 padding: 20px;
+
+                @include sm-block() {
+                    padding: 10px;
+                }
             }
 
             tr {
@@ -624,6 +701,10 @@ main {
             th {
                 font-size: 24px;
                 color: $color-red;
+
+                @include sm-block() {
+                    font-size: 18px;
+                }
             }
         }
 
@@ -631,6 +712,10 @@ main {
             font-size: 24px;
             color: $color-red;
             padding-top: 10px;
+
+            @include sm-block() {
+                font-size: 18px;
+            }
         }
 
         p {
@@ -686,11 +771,8 @@ main {
             }
 
             @include md-block() {
-                width: 33.3333333%;
-            }
-
-            @include md-block() {
                 width: 50%;
+                height: 250px;
             }
 
             @include xsm-block() {
@@ -766,12 +848,13 @@ main {
             border: 1px solid #fff;
             box-sizing: border-box;
 
-            &:hover, &.slick-center {
+            &.slick-center {
                 z-index: 2;
             }
 
             &:hover {
                 transform: scale(1.2);
+                z-index: 3;
             }
 
             &:nth-child(2n) {
@@ -804,13 +887,14 @@ main {
             &--text {
                 padding: 20px;
                 box-sizing: border-box;
+                font-size: 20px;
 
                 p {
                     margin-bottom: 20px;
                 }
 
                 .name {
-                    font-size: 20px;
+                    font-size: 22px;
                     color: $color-red;
                 }
             }
@@ -834,6 +918,15 @@ main {
         .h2 {
             margin: 0;
         }
+
+        @include xsm-block() {
+            flex-direction: column;
+            justify-content: center;
+
+            img {
+                margin-bottom: 20px;
+            }
+        }
     }
 
     @keyframes blinker {
@@ -844,6 +937,12 @@ main {
     @-webkit-keyframes blinker {
         from { opacity: 1.0; }
         to { opacity: 0.0; }
+    }
+
+    svg {
+        @include xsm-block() {
+            display: none;
+        }
     }
 
     .trans {
@@ -865,6 +964,14 @@ main {
     form {
         margin-top: -180px;
         width: 300px;
+
+        @include md-block() {
+            margin-top: -250px;
+        }
+
+        @include xsm-block() {
+            margin-top: 30px;
+        }
 
         .block-input {
             position: relative;
@@ -922,6 +1029,12 @@ main {
 }
 
 .section-stock {
+    .image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
     &__items {
         @include row-flex();
 
@@ -930,6 +1043,18 @@ main {
             @include size(6);
             @include size-sm(12);
             text-align: center;
+
+            &--stock {
+                background-color: $bg;
+                box-shadow: $shadow;
+                padding: 20px;
+                box-sizing: border-box;
+            }
+
+            .logo {
+                width: 100px;
+                margin-bottom: 20px;
+            }
 
             h3 {
                 font-size: 34px;
@@ -1137,6 +1262,10 @@ main {
             align-items: center;
             margin-top: 20px;
 
+            @include sm-block() {
+                justify-content: center;
+            }
+
             span {
                 margin-left: 20px;
             }
@@ -1310,59 +1439,59 @@ main {
 
 @-webkit-keyframes radial-anakausug {
     0% {
-        box-shadow: 0 0 rgba(80, 184, 72, 0.5);
+        box-shadow: 0 0 rgba(211, 1, 0, 0.5);
     }
     100% {
-        box-shadow: 0 0 0 10px rgba(80, 184, 72, 0.1);
+        box-shadow: 0 0 0 10px rgba(211, 1, 0, 0.1);
     }
 }
 
 @keyframes radial-anakausug {
     0% {
-        box-shadow: 0 0 rgba(228, 177, 86, 0.5);
+        box-shadow: 0 0 rgba(211, 1, 0, 0.5);
     }
     100% {
-        box-shadow: 0 0 0 10px rgba(228, 177, 86, 0.1);
+        box-shadow: 0 0 0 10px rgba(211, 1, 0, 0.1);
     }
 }
 
 @-webkit-keyframes hoverWave {
     0% {
-        box-shadow: 0 8px 10px rgba(228, 177, 86, 0.3), 0 0 0 0 rgba(228, 177, 86, 0.2), 0 0 0 0 rgba(228, 177, 86, 0.3);
+        box-shadow: 0 8px 10px rgba(211, 1, 0, 0.3), 0 0 0 0 rgba(211, 1, 0, 0.2), 0 0 0 0 rgba(211, 1, 0, 0.3);
     }
 
     40% {
-        box-shadow: 0 8px 10px rgba(228, 177, 86, 0.3), 0 0 0 15px rgba(228, 177, 86, 0.2),
-            0 0 0 0 rgba(228, 177, 86, 0.3);
+        box-shadow: 0 8px 10px rgba(211, 1, 0, 0.3), 0 0 0 15px rgba(211, 1, 0, 0.2),
+            0 0 0 0 rgba(211, 1, 0, 0.3);
     }
 
     80% {
-        box-shadow: 0 8px 10px rgba(228, 177, 86, 0.3), 0 0 0 30px rgba(228, 177, 86, 0),
-            0 0 0 26.7px rgba(228, 177, 86, 0.3);
+        box-shadow: 0 8px 10px rgba(211, 1, 0, 0.3), 0 0 0 30px rgba(211, 1, 0, 0),
+            0 0 0 26.7px rgba(211, 1, 0, 0.3);
     }
 
     100% {
-        box-shadow: 0 8px 10px rgba(228, 177, 86, 0.3), 0 0 0 30px rgba(228, 177, 86, 0),
-            0 0 0 40px rgba(228, 177, 86, 0.3);
+        box-shadow: 0 8px 10px rgba(211, 1, 0, 0.3), 0 0 0 30px rgba(211, 1, 0, 0),
+            0 0 0 40px rgba(211, 1, 0, 0.3);
     }
 }
 
 @keyframes hoverWave {
     0% {
-        box-shadow: 0 8px 10px rgba(228, 177, 86, 0.3), 0 0 0 0 rgba(228, 177, 86, 0.3), 0 0 0 0 rgba(228, 177, 86, 0.3);
+        box-shadow: 0 8px 10px rgba(211, 1, 0, 0.3), 0 0 0 0 rgba(211, 1, 0, 0.3), 0 0 0 0 rgba(211, 1, 0, 0.3);
     }
 
     40% {
-        box-shadow: 0 8px 10px rgba(228, 177, 86, 0.3), 0 0 0 15px rgba(228, 177, 86, 0.2),
-            0 0 0 0 rgba(228, 177, 86, 0.3);
+        box-shadow: 0 8px 10px rgba(211, 1, 0, 0.3), 0 0 0 15px rgba(211, 1, 0, 0.2),
+            0 0 0 0 rgba(211, 1, 0, 0.3);
     }
 
     80% {
-        box-shadow: 0 8px 10px rgba(228, 177, 86, 0.3), 0 0 0 0 rgba(228, 177, 86, 0.3), 0 0 0 0 rgba(228, 177, 86, 0.3);
+        box-shadow: 0 8px 10px rgba(211, 1, 0, 0.3), 0 0 0 0 rgba(211, 1, 0, 0.3), 0 0 0 0 rgba(211, 1, 0, 0.3);
     }
 
     100% {
-        box-shadow: 0 8px 10px rgba(228, 177, 86, 0.3), 0 0 0 0 rgba(228, 177, 86, 0.3), 0 0 0 0 rgba(228, 177, 86, 0.3);
+        box-shadow: 0 8px 10px rgba(211, 1, 0, 0.3), 0 0 0 0 rgba(211, 1, 0, 0.3), 0 0 0 0 rgba(211, 1, 0, 0.3);
     }
 }
 
